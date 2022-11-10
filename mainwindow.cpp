@@ -1,19 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <qwt_plot.h>
+#include <iostream>
 #include <qwt_plot_grid.h>
 #include <QFile>
 #include <qwt_legend.h>
-
 #include <qwt_plot_curve.h>
 #include <qwt_symbol.h>
-
 #include <qwt_plot_magnifier.h>
-
 #include <qwt_plot_panner.h>
-
 #include <qwt_plot_picker.h>
 #include <qwt_picker_machine.h>
+#include <qwt_plot_dict.h>
+#include <QFileDialog>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -75,7 +74,7 @@ void MainWindow::middle(QPointF beg,QPointF end)
             points[1] = end;
             QwtPlotCurve *curve = new QwtPlotCurve();
             curve->setPen( Qt::blue, 1 );
-            curve->setSamples( points ); // ассоциировать набор точек с кривой
+            curve->setSamples( points );
             curve->attach( ui->widget );
             ui->widget->replot();
             return;
@@ -112,7 +111,7 @@ void MainWindow::middle(QPointF beg,QPointF end)
        points[1] = end;
        QwtPlotCurve *curve = new QwtPlotCurve();
        curve->setPen( Qt::blue, 1 );
-       curve->setSamples( points ); // ассоциировать набор точек с кривой
+       curve->setSamples( points );
        curve->attach( ui->widget );
        ui->widget->replot();
        return;
@@ -182,7 +181,7 @@ void MainWindow::Polygon(QPointF beg,QPointF end)
         curve->setPen( Qt::blue, 1 );
         XX.push_back(points[0]);
         YY.push_back(points[1]);
-        curve->setSamples( points ); // ассоциировать набор точек с кривой
+        curve->setSamples( points );
         curve->attach( ui->widget );
         ui->widget->replot();
         return;
@@ -202,7 +201,7 @@ void MainWindow::Polygon(QPointF beg,QPointF end)
         curve->setPen( Qt::blue, 1 );
         XX.push_back(points[0]);
         YY.push_back(points[1]);
-        curve->setSamples( points ); // ассоциировать набор точек с кривой
+        curve->setSamples( points );
         curve->attach( ui->widget );
         ui->widget->replot();
         return;
@@ -223,7 +222,7 @@ void MainWindow::Polygon(QPointF beg,QPointF end)
         curve->setPen( Qt::blue, 1 );
         XX.push_back(points[0]);
         YY.push_back(points[1]);
-        curve->setSamples( points ); // ассоциировать набор точек с кривой
+        curve->setSamples( points );
         curve->attach( ui->widget );
         ui->widget->replot();
         return;
@@ -253,7 +252,7 @@ void MainWindow::Polygon(QPointF beg,QPointF end)
         curve->setPen( Qt::blue, 1 );
         XX.push_back(points[0]);
         YY.push_back(points[1]);
-        curve->setSamples( points ); // ассоциировать набор точек с кривой
+        curve->setSamples( points );
         curve->attach( ui->widget );
         ui->widget->replot();
         return;
@@ -283,7 +282,7 @@ void MainWindow::Polygon(QPointF beg,QPointF end)
         curve->setPen( Qt::blue, 1 );
         XX.push_back(points[0]);
         YY.push_back(points[1]);
-        curve->setSamples( points ); // ассоциировать набор точек с кривой
+        curve->setSamples( points );
         curve->attach( ui->widget );
         ui->widget->replot();
         return;
@@ -310,7 +309,7 @@ void MainWindow::Polygon(QPointF beg,QPointF end)
         curve->setPen( Qt::blue, 1 );
         XX.push_back(points[0]);
         YY.push_back(points[1]);
-        curve->setSamples( points ); // ассоциировать набор точек с кривой
+        curve->setSamples( points );
         curve->attach( ui->widget );
         ui->widget->replot();
         return;
@@ -336,7 +335,7 @@ void MainWindow::Polygon(QPointF beg,QPointF end)
         curve->setPen( Qt::blue, 1 );
         XX.push_back(points[0]);
         YY.push_back(points[1]);
-        curve->setSamples( points ); // ассоциировать набор точек с кривой
+        curve->setSamples( points );
         curve->attach( ui->widget );
         ui->widget->replot();
         return;
@@ -346,7 +345,7 @@ void MainWindow::on_pushButton_clicked()
 {
     int size;
     double x1,y1,x2,y2;
-    QFile file("in.txt");
+    QFile file(path);
     file.open(QIODevice::ReadOnly);
     QTextStream fin(&file);
     fin >> size;
@@ -370,7 +369,7 @@ void MainWindow::on_pushButton_clicked()
     QwtPlotCurve *curve = new QwtPlotCurve();
     curve->setTitle( "Polygon" );
     curve->setPen( Qt::red, 1 );
-    curve->setSamples( points ); // ассоциировать набор точек с кривой
+    curve->setSamples( points );
     curve->attach( ui->widget );
     for(int i=0;i<size;i++)
     {
@@ -384,7 +383,7 @@ void MainWindow::on_pushButton_2_clicked()
 {
     int size;
     double x1,y1,x2,y2;
-    QFile file("in.txt");
+    QFile file(path);
     file.open(QIODevice::ReadOnly);
     QTextStream fin(&file);
     fin >> size;
@@ -402,13 +401,13 @@ void MainWindow::on_pushButton_2_clicked()
     max_poly.setX(x2);
     max_poly.setY(y2);
     QPolygonF points ;
-    points << QPointF( x1, y1 ) // координаты x, y
+    points << QPointF( x1, y1 )
             << QPointF( x1, y2 ) << QPointF( x2, y2 )
             << QPointF( x2, y1 ) << QPointF( x1, y1 );
     QwtPlotCurve *curve = new QwtPlotCurve();
     curve->setTitle( "Polygon" );
     curve->setPen( Qt::red, 1 );
-    curve->setSamples( points ); // ассоциировать набор точек с кривой
+    curve->setSamples( points );
     curve->attach( ui->widget );
     for(int i=0;i<size;i++)
     {
@@ -420,4 +419,23 @@ void MainWindow::on_pushButton_2_clicked()
     }
     ui->widget->replot();
     file.close();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    ui->widget->QwtPlotDict::detachItems(
+         QwtPlotItem::Rtti_PlotCurve,
+          true );
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QString arr[]={".txt"};
+    QString arch;
+         QString fileName = QFileDialog ::getOpenFileName(
+            this,
+            tr("open a file."),
+            "D:/",
+            tr("files(*txt)"));
+       path = fileName;
 }
